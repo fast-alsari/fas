@@ -1,0 +1,1108 @@
+ك 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+لوحة تحكم الادمن
+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+padding:20px;
+}
+
+.header{
+background:linear-gradient(45deg,#ff7b00,#0066ff);
+padding:20px;
+border-radius:20px;
+color:#fff;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.logout-btn{
+background:#fff;
+color:#000;
+border:none;
+padding:10px 18px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:18px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+text-align:center;
+}
+
+.card h2{
+font-size:35px;
+margin-bottom:10px;
+color:#0066ff;
+}
+
+.tabs{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.tab-btn{
+border:none;
+padding:12px 18px;
+border-radius:12px;
+background:#ddd;
+cursor:pointer;
+font-weight:bold;
+}
+
+.tab-btn.active{
+background:#ff7b00;
+color:white;
+}
+
+.section{
+display:none;
+background:#fff;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.active-section{
+display:block;
+}
+
+.section-title{
+font-size:22px;
+margin-bottom:15px;
+color:#ff7b00;
+}
+
+.item{
+border:1px solid #ddd;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.item p{
+margin-bottom:8px;
+}
+
+.actions{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.actions button{
+border:none;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+color:#fff;
+}
+
+.accept{
+background:#00b894;
+}
+
+.reject{
+background:#d63031;
+}
+
+.ban{
+background:#e17055;
+}
+
+.location{
+background:#0984e3;
+}
+
+.expire{
+background:#6c5ce7;
+}
+
+.vip{
+background:#111;
+color:#ff8800 !important;
+border:2px solid #ff8800 !important;
+}
+
+img{
+max-width:100px;
+max-height:100px;
+object-fit:cover;
+border-radius:15px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div>
+
+<h1>
+لوحة تحكم الادمن
+</h1>
+
+<p>
+إدارة التطبيق بالكامل
+</p>
+
+</div>
+
+<button
+class="logout-btn"
+onclick="logout()">
+
+تسجيل الخروج
+
+</button>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h2 id="customersCount">
+0
+</h2>
+
+<p>
+المستخدمين
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="storesCount">
+0
+</h2>
+
+<p>
+المتاجر
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="driversCount">
+0
+</h2>
+
+<p>
+السواق
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="productsCount">
+0
+</h2>
+
+<p>
+المنتجات
+</p>
+
+</div>
+
+</div>
+
+<div class="tabs">
+
+<button
+class="tab-btn active"
+onclick="showSection('customersSection',this)">
+
+الزبائن
+
+</button>
+
+<button
+class="tab-btn"
+onclick="showSection('storesSection',this)">
+
+المتاجر
+
+</button>
+
+<button
+class="tab-btn"
+onclick="showSection('driversSection',this)">
+
+السواق
+
+</button>
+
+<button
+class="tab-btn"
+onclick="showSection('productsSection',this)">
+
+المنتجات
+
+</button>
+
+</div>
+
+<!-- الزبائن -->
+
+<div
+id="customersSection"
+class="section active-section">
+
+<h2 class="section-title">
+المستخدمين
+</h2>
+
+<div id="customersContainer"></div>
+
+</div>
+
+<!-- المتاجر -->
+
+<div
+id="storesSection"
+class="section">
+
+<h2 class="section-title">
+المتاجر
+</h2>
+
+<div id="storesContainer"></div>
+
+</div>
+
+<!-- السواق -->
+
+<div
+id="driversSection"
+class="section">
+
+<h2 class="section-title">
+السواق
+</h2>
+
+<div id="driversContainer"></div>
+
+</div>
+
+<!-- المنتجات -->
+
+<div
+id="productsSection"
+class="section">
+
+<h2 class="section-title">
+المنتجات
+</h2>
+
+<div id="productsContainer"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update,
+remove
+}
+from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyC7QzQTYMSGRV_nraJBneBqDqYGhugF0Pw",
+
+authDomain:"fast-937c9.firebaseapp.com",
+
+projectId:"fast-937c9",
+
+storageBucket:"fast-937c9.firebasestorage.app",
+
+messagingSenderId:"221388561840",
+
+appId:"1:221388561840:web:ec9d75183ddd7d44be0a75",
+
+measurementId:"G-CEKHEPNR9X",
+
+databaseURL:
+"https://fast-937c9-default-rtdb.europe-west1.firebasedatabase.app"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const database =
+getDatabase(app);
+
+const currentUser =
+JSON.parse(localStorage.getItem("user"));
+
+if(!currentUser || currentUser.type !== "admin"){
+
+window.location.href =
+"index.html";
+
+}
+
+// تسجيل خروج
+
+window.logout = function(){
+
+localStorage.removeItem("user");
+
+window.location.href =
+"index.html";
+
+};
+
+// تغيير الاقسام
+
+window.showSection =
+function(id,button){
+
+document.querySelectorAll(".section")
+.forEach(section=>{
+
+section.classList.remove("active-section");
+
+});
+
+document.getElementById(id)
+.classList.add("active-section");
+
+document.querySelectorAll(".tab-btn")
+.forEach(btn=>{
+
+btn.classList.remove("active");
+
+});
+
+button.classList.add("active");
+
+};
+
+// تحميل البيانات
+
+async function loadDashboard(){
+
+// الزبائن
+
+let customersSnapshot =
+await get(ref(database,"customers"));
+
+let customersContainer =
+document.getElementById("customersContainer");
+
+customersContainer.innerHTML = "";
+
+if(customersSnapshot.exists()){
+
+let customers =
+customersSnapshot.val();
+
+document.getElementById("customersCount")
+.innerText =
+Object.keys(customers).length;
+
+for(let id in customers){
+
+let user = customers[id];
+
+customersContainer.innerHTML += `
+
+<div class="item">
+
+<p><strong>الاسم:</strong> ${user.name}</p>
+
+<p><strong>الهاتف:</strong> ${user.phone}</p>
+
+<p><strong>العنوان:</strong> ${user.address || "-"}</p>
+
+<p><strong>الحالة:</strong> ${user.status}</p>
+
+<div class="actions">
+
+<button
+class="ban"
+onclick="banCustomer('${id}')">
+
+حظر
+
+</button>
+
+<button
+class="accept"
+onclick="unbanCustomer('${id}')">
+
+فك الحظر
+
+</button>
+
+<button
+class="reject"
+onclick="deleteCustomer('${id}')">
+
+حذف
+
+</button>
+
+<button
+class="location"
+onclick="openLocation('${user.latitude}','${user.longitude}')">
+
+الموقع
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+// المتاجر
+
+let storesSnapshot =
+await get(ref(database,"stores"));
+
+let storesContainer =
+document.getElementById("storesContainer");
+
+storesContainer.innerHTML = "";
+
+if(storesSnapshot.exists()){
+
+let stores =
+storesSnapshot.val();
+
+document.getElementById("storesCount")
+.innerText =
+Object.keys(stores).length;
+
+let today =
+new Date()
+.toISOString()
+.split("T")[0];
+
+for(let id in stores){
+
+let store = stores[id];
+
+// انتهاء VIP
+
+if(
+store.accountType === "vip" &&
+store.vipExpireDate &&
+store.vipExpireDate < today
+){
+
+await update(
+ref(database,"stores/"+id),
+{
+accountType:"normal",
+vipExpireDate:""
+}
+);
+
+store.accountType = "normal";
+
+}
+
+storesContainer.innerHTML += `
+
+<div class="item">
+
+<p><strong>اسم المتجر:</strong> ${store.store_name}</p>
+
+<p><strong>المالك:</strong> ${store.owner}</p>
+
+<p><strong>الهاتف:</strong> ${store.phone}</p>
+
+<p><strong>النوع:</strong> ${store.category}</p>
+
+<p><strong>الحالة:</strong> ${store.status}</p>
+
+<p><strong>عدد الطلبات:</strong> ${store.orders || 0}</p>
+
+<p><strong>مبلغ البيع:</strong> ${store.sales || 0} د.ع</p>
+
+<p><strong>تاريخ الانتهاء:</strong> ${store.expireDate || "غير محدد"}</p>
+
+<p><strong>حالة VIP:</strong>
+
+${
+store.accountType === "vip"
+?
+"VIP 🔥"
+:
+"عادي"
+}
+
+</p>
+
+<p><strong>انتهاء VIP:</strong>
+
+${store.vipExpireDate || "غير محدد"}
+
+</p>
+
+<div class="actions">
+
+<button
+class="accept"
+onclick="activateStore('${id}')">
+
+تفعيل
+
+</button>
+
+<button
+class="ban"
+onclick="disableStore('${id}')">
+
+إيقاف
+
+</button>
+
+<button
+class="reject"
+onclick="deleteStore('${id}')">
+
+حذف
+
+</button>
+
+<button
+class="expire"
+onclick="setExpireDate('stores','${id}')">
+
+تحديد انتهاء
+
+</button>
+
+<button
+class="vip"
+onclick="makeVip('${id}')">
+
+VIP
+
+</button>
+
+<button
+class="reject"
+onclick="removeVip('${id}')">
+
+إزالة VIP
+
+</button>
+
+<button
+class="location"
+onclick="openLocation('${store.latitude}','${store.longitude}')">
+
+الموقع
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+// السواق
+
+let driversSnapshot =
+await get(ref(database,"drivers"));
+
+let driversContainer =
+document.getElementById("driversContainer");
+
+driversContainer.innerHTML = "";
+
+if(driversSnapshot.exists()){
+
+let drivers =
+driversSnapshot.val();
+
+document.getElementById("driversCount")
+.innerText =
+Object.keys(drivers).length;
+
+for(let id in drivers){
+
+let driver = drivers[id];
+
+driversContainer.innerHTML += `
+
+<div class="item">
+
+<p><strong>الاسم:</strong> ${driver.name}</p>
+
+<p><strong>الهاتف:</strong> ${driver.phone}</p>
+
+<p><strong>المركبة:</strong> ${driver.vehicle}</p>
+
+<p><strong>الحالة:</strong> ${driver.status}</p>
+
+<p><strong>عدد الطلبات:</strong> ${driver.orders || 0}</p>
+
+<p><strong>الارباح:</strong> ${driver.earnings || 0} د.ع</p>
+
+<p><strong>تاريخ الانتهاء:</strong> ${driver.expireDate || "غير محدد"}</p>
+
+<div class="actions">
+
+<button
+class="accept"
+onclick="activateDriver('${id}')">
+
+تفعيل
+
+</button>
+
+<button
+class="ban"
+onclick="disableDriver('${id}')">
+
+إيقاف
+
+</button>
+
+<button
+class="reject"
+onclick="deleteDriver('${id}')">
+
+حذف
+
+</button>
+
+<button
+class="expire"
+onclick="setExpireDate('drivers','${id}')">
+
+تحديد انتهاء
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+// المنتجات
+
+let productsSnapshot =
+await get(ref(database,"store_products"));
+
+let productsContainer =
+document.getElementById("productsContainer");
+
+productsContainer.innerHTML = "";
+
+let totalProducts = 0;
+
+if(productsSnapshot.exists()){
+
+let storesProducts =
+productsSnapshot.val();
+
+for(let storeId in storesProducts){
+
+let products =
+storesProducts[storeId];
+
+for(let productId in products){
+
+totalProducts++;
+
+let product =
+products[productId];
+
+productsContainer.innerHTML += `
+
+<div class="item">
+
+<p><strong>اسم المنتج:</strong> ${product.name}</p>
+
+<p><strong>المتجر:</strong> ${product.storeName}</p>
+
+<p><strong>السعر:</strong> ${product.price} د.ع</p>
+
+<p><strong>الوصف:</strong> ${product.description}</p>
+
+<p><strong>الحالة:</strong> ${product.status}</p>
+
+<img src="${product.image}">
+
+<div class="actions">
+
+<button
+class="accept"
+onclick="
+approveProduct(
+'${storeId}',
+'${productId}'
+)
+">
+
+قبول
+
+</button>
+
+<button
+class="reject"
+onclick="
+rejectProduct(
+'${storeId}',
+'${productId}'
+)
+">
+
+رفض
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+}
+
+document.getElementById("productsCount")
+.innerText = totalProducts;
+
+}
+
+loadDashboard();
+
+// المنتجات
+
+window.approveProduct =
+async function(storeId,productId){
+
+await update(
+ref(
+database,
+`store_products/${storeId}/${productId}`
+),
+{
+status:"active"
+}
+);
+
+loadDashboard();
+
+};
+
+window.rejectProduct =
+async function(storeId,productId){
+
+await update(
+ref(
+database,
+`store_products/${storeId}/${productId}`
+),
+{
+status:"rejected"
+}
+);
+
+loadDashboard();
+
+};
+
+// VIP
+
+window.makeVip =
+async function(id){
+
+let vipDate =
+prompt(
+"ادخل تاريخ انتهاء VIP مثال 2026-12-31"
+);
+
+if(!vipDate) return;
+
+await update(
+ref(database,"stores/"+id),
+{
+accountType:"vip",
+vipExpireDate:vipDate
+}
+);
+
+alert("تم تفعيل VIP");
+
+loadDashboard();
+
+};
+
+window.removeVip =
+async function(id){
+
+await update(
+ref(database,"stores/"+id),
+{
+accountType:"normal",
+vipExpireDate:""
+}
+);
+
+alert("تم إزالة VIP");
+
+loadDashboard();
+
+};
+
+// المتاجر
+
+window.activateStore =
+async function(id){
+
+await update(
+ref(database,"stores/"+id),
+{
+status:"active"
+}
+);
+
+loadDashboard();
+
+};
+
+window.disableStore =
+async function(id){
+
+await update(
+ref(database,"stores/"+id),
+{
+status:"disabled"
+}
+);
+
+loadDashboard();
+
+};
+
+window.deleteStore =
+async function(id){
+
+if(!confirm("حذف المتجر ؟")) return;
+
+await remove(
+ref(database,"stores/"+id)
+);
+
+loadDashboard();
+
+};
+
+// السواق
+
+window.activateDriver =
+async function(id){
+
+await update(
+ref(database,"drivers/"+id),
+{
+status:"active"
+}
+);
+
+loadDashboard();
+
+};
+
+window.disableDriver =
+async function(id){
+
+await update(
+ref(database,"drivers/"+id),
+{
+status:"disabled"
+}
+);
+
+loadDashboard();
+
+};
+
+window.deleteDriver =
+async function(id){
+
+if(!confirm("حذف السائق ؟")) return;
+
+await remove(
+ref(database,"drivers/"+id)
+);
+
+loadDashboard();
+
+};
+
+// الزبائن
+
+window.banCustomer =
+async function(id){
+
+await update(
+ref(database,"customers/"+id),
+{
+status:"banned"
+}
+);
+
+loadDashboard();
+
+};
+
+window.unbanCustomer =
+async function(id){
+
+await update(
+ref(database,"customers/"+id),
+{
+status:"active"
+}
+);
+
+loadDashboard();
+
+};
+
+window.deleteCustomer =
+async function(id){
+
+if(!confirm("حذف المستخدم ؟")) return;
+
+await remove(
+ref(database,"customers/"+id)
+);
+
+loadDashboard();
+
+};
+
+// انتهاء
+
+window.setExpireDate =
+async function(type,id){
+
+let date =
+prompt("ادخل تاريخ الانتهاء");
+
+if(!date) return;
+
+await update(
+ref(database,`${type}/${id}`),
+{
+expireDate:date
+}
+);
+
+loadDashboard();
+
+};
+
+// الموقع
+
+window.openLocation =
+function(lat,lng){
+
+if(!lat || !lng){
+
+alert("لا يوجد موقع");
+
+return;
+
+}
+
+window.open(
+`https://maps.google.com/?q=${lat},${lng}`
+);
+
+};
+
+</script>
+
+</body>
+</html>
